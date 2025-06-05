@@ -1,6 +1,5 @@
-# Recreate the file after environment reset
-script_path = "/mnt/data/Kahoot_Answer_Highlighter_FULL_FIXED.user.js"
-user_script = """\
+
+
 // ==UserScript==
 // @name         Kahoot Answer Highlighter (Full 100+ Questions)
 // @namespace    http://tampermonkey.net/
