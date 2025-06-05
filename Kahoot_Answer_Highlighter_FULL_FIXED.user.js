@@ -302,7 +302,7 @@ const questionText = questionElem.textContent.trim();
 const matched = findBestMatch(questionText);
 if (!matched) return;
 const correctAnswer = answerDB[matched];
-const buttons = document.querySelectorAll('.mcq-answer');
+const buttons = document.querySelectorAll('[data-functional-selector="answer-button"]');
 buttons.forEach(btn => {
 const text = btn.textContent.trim();
 if (text === correctAnswer) {
