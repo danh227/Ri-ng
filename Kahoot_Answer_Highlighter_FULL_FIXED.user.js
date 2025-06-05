@@ -296,7 +296,7 @@ bestMatch = q;
 return bestScore >= 0.6 ? bestMatch : null;
 }
 function highlightAnswer() {
-const questionElem = document.querySelector('.question-text');
+const questionElem = document.querySelector('[data-functional-selector="question-text"]');
 if (!questionElem) return;
 const questionText = questionElem.textContent.trim();
 const matched = findBestMatch(questionText);
