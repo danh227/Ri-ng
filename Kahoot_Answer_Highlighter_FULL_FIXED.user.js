@@ -1,34 +1,36 @@
-
-
 // ==UserScript==
-// @name         Kahoot Answer Highlighter (Full 100+ Questions)
+// @name         Kahoot Answer Highlighter (Fixed 2024)
 // @namespace    http://tampermonkey.net/
-// @version      3.1
-// @description  Tô màu đáp án đúng cho tất cả câu hỏi an toàn lao động trong Kahoot (Lý thuyết, PCCC, Bộ phận cắt). Không auto click, fuzzy match hỗ trợ sai lệch câu hỏi nhẹ.
+// @version      3.2
+// @description  Tô màu đáp án đúng cho Kahoot - tương thích giao diện mới 2024 (Kiwi Android + Tampermonkey)
 // @author       Bạn
 // @match        https://kahoot.it/*
 // @grant        none
 // ==/UserScript==
+
 (function () {
-'use strict';
-const answerDB = {
-"Người lao động có quyền từ chối hoặc rời bỏ nơi làm việc mà vẫn được trả đủ tiền lương và không bị coi là vi phạm kỷ luật lao động khi nào?": "Khi thấy rõ có nguy cơ xảy ra tai nạn lao động, đe dọa nghiêm trọng tính mạng, sức khỏe của mình và phải báo cáo ngay với người phụ trách trực tiếp.",
-"Những người làm những việc có yêu cầu nghiêm ngặt về an toàn lao động được xếp vào nhóm nào?": "Nhóm 3.",
-"Mục đích của công tác an toàn - vệ sinh lao động là gì?": "Đảm bảo an toàn cho người lao động, hạn chế đến mức thấp nhất hoặc không để xảy ra tai nạn...",
-"Theo quy định tại Nghị định 44/2016/NĐ-CP ngày 15/05/2016 của Chính phủ, người lao động có yêu cầu nghiêm ngặt về an toàn lao động (Nhóm 3) phải được huấn luyện định kỳ ít nhất bao nhiêu năm một lần?": "2 năm.",
-"Trang bị phương tiện bảo vệ cá nhân đầy đủ để làm gì?": "Ngăn ngừa tai nạn lao động và ngăn ngừa bệnh nghề nghiệp.",
-"Sự cố kỹ thuật gây mất an toàn, vệ sinh lao động là gì?": "Là hư hỏng của máy, thiết bị, vật tư, chất vượt quá giới hạn an toàn kỹ thuật cho phép...",
-"Công ty tiến hành diễn tập PCCC và di tản thoát nạn một năm mấy lần?": "2 lần.",
-"Nút ấn khẩn báo cháy được sử dụng để làm gì?": "Ấn nút để chuông reo khi phát hiện có dấu hiệu của đám cháy giúp mọi người di tản ra bên ngoài.",
-"Khi nghe tiếng chuông báo cháy, công nhân viên phải làm gì?": "Sử dụng lối thoát hiểm gần nhất, đi theo các kí hiệu mũi tên đỏ để thoát ra khỏi khu vực đang có cháy và tập trung tại khu vực an toàn.",
-"Cách sử dụng bình chữa cháy bằng bột như thế nào?": "Lắc bình, rút chốt, hướng loa phun vào ngọn lửa, bóp cò.",
-"Nếu xảy ra sự cố trong lúc vận hành máy (kẹt vải, dao không quay), công nhân nên làm gì?": "Nhấn nút dừng khẩn cấp.",
-"Trong quá trình cắt, biện pháp đúng để phòng tránh tai nạn do dao hoặc kéo sắc gây ra là gì?": "Đậy nắp lưỡi dao khi không sử dụng.",
-"Tại sao an toàn vệ sinh lao động lại quan trọng nhất ở bộ phận cắt vải?": "Để bảo vệ tính mạng và sức khỏe của người lao động.",
-"Khi vận hành máy cắt vòng, công nhân viên có cần sử dụng bao tay sắt không? Vì sao?": "Cần thiết, bao tay sắt sẽ bảo vệ tay...",
-"Khi phát hiện lớp cách điện của dây điện trên máy cắt cầm tay bị hỏng, người vận hành máy cắt nên làm gì?": "Báo ngay cho bộ phận bảo trì hoặc quản lý...",
-"Trang phục phù hợp khi làm việc tại khu vực cắt vải là gì?": "Quần áo ôm gọn, không vướng víu, không phụ kiện.",
-"Trong khi thao tác, hành vi nào là không phù hợp?": "Nói chuyện điện thoại trong lúc đang vận hành máy cắt.", Dưới đây là phần tổng hợp thông tin dưới dạng câu hỏi và câu trả lời, dựa trên nội dung bạn đã cung cấp:
+    'use strict';
+
+    // 👉 Danh sách câu hỏi và đáp án đúng
+    const answerDB = {
+        "Các yếu tố nguy hiểm trong sản xuất là gì?": "Nguồn điện, nguồn nhiệt, bộ phận chuyển động, truyền động.",
+        Người lao động có quyền từ chối hoặc rời bỏ nơi làm việc mà vẫn được trả đủ tiền lương và không bị coi là vi phạm kỷ luật lao động khi nào?": "Khi thấy rõ có nguy cơ xảy ra tai nạn lao động, đe dọa nghiêm trọng tính mạng, sức khỏe của mình và phải báo cáo ngay với người phụ trách trực tiếp.",
+        "Những người làm những việc có yêu cầu nghiêm ngặt về an toàn lao động được xếp vào nhóm nào?": "Nhóm 3.",
+        "Mục đích của công tác an toàn - vệ sinh lao động là gì?": "Đảm bảo an toàn cho người lao động, hạn chế đến mức thấp nhất hoặc không để xảy ra tai nạn...",
+        "Theo quy định tại Nghị định 44/2016/NĐ-CP ngày 15/05/2016 của Chính phủ, người lao động có yêu cầu nghiêm ngặt về an toàn lao động (Nhóm 3) phải được huấn luyện định kỳ ít nhất bao nhiêu năm một lần?": "2 năm.",
+        "Trang bị phương tiện bảo vệ cá nhân đầy đủ để làm gì?": "Ngăn ngừa tai nạn lao động và ngăn ngừa bệnh nghề nghiệp.",
+        "Sự cố kỹ thuật gây mất an toàn, vệ sinh lao động là gì?": "Là hư hỏng của máy, thiết bị, vật tư, chất vượt quá giới hạn an toàn kỹ thuật cho phép...",
+        "Công ty tiến hành diễn tập PCCC và di tản thoát nạn một năm mấy lần?": "2 lần.",
+        "Nút ấn khẩn báo cháy được sử dụng để làm gì?": "Ấn nút để chuông reo khi phát hiện có dấu hiệu của đám cháy giúp mọi người di tản ra bên ngoài.",
+        "Khi nghe tiếng chuông báo cháy, công nhân viên phải làm gì?": "Sử dụng lối thoát hiểm gần nhất, đi theo các kí hiệu mũi tên đỏ để thoát ra khỏi khu vực đang có cháy và tập trung tại khu vực an toàn.",
+        "Cách sử dụng bình chữa cháy bằng bột như thế nào?": "Lắc bình, rút chốt, hướng loa phun vào ngọn lửa, bóp cò.",
+        "Nếu xảy ra sự cố trong lúc vận hành máy (kẹt vải, dao không quay), công nhân nên làm gì?": "Nhấn nút dừng khẩn cấp.",
+        "Trong quá trình cắt, biện pháp đúng để phòng tránh tai nạn do dao hoặc kéo sắc gây ra là gì?": "Đậy nắp lưỡi dao khi không sử dụng.",
+        "Tại sao an toàn vệ sinh lao động lại quan trọng nhất ở bộ phận cắt vải?": "Để bảo vệ tính mạng và sức khỏe của người lao động.",
+        "Khi vận hành máy cắt vòng, công nhân viên có cần sử dụng bao tay sắt không? Vì sao?": "Cần thiết, bao tay sắt sẽ bảo vệ tay...",
+        "Khi phát hiện lớp cách điện của dây điện trên máy cắt cầm tay bị hỏng, người vận hành máy cắt nên làm gì?": "Báo ngay cho bộ phận bảo trì hoặc quản lý...",
+        "Trang phục phù hợp khi làm việc tại khu vực cắt vải là gì?": "Quần áo ôm gọn, không vướng víu, không phụ kiện.",
+        "Trong khi thao tác, hành vi nào là không phù hợp?": "Nói chuyện điện thoại trong lúc đang vận hành máy cắt.", Dưới đây là phần tổng hợp thông tin dưới dạng câu hỏi và câu trả lời, dựa trên nội dung bạn đã cung cấp:
 Chủ đề: Lý thuyết chung về an toàn vệ sinh lao động tại nơi làm việc
 "Người lao động có quyền từ chối hoặc rời bỏ nơi làm việc mà vẫn được trả đủ tiền lương và không bị coi là vi phạm kỷ luật lao động khi nào?"
 "Khi thấy rõ có nguy cơ xảy ra tai nạn lao động, đe dọa nghiêm trọng tính mạng, sức khỏe của mình và phải báo cáo ngay với người phụ trách trực tiếp."
@@ -180,7 +182,7 @@ Chủ đề: Lý thuyết chung về an toàn vệ sinh lao động tại nơi l
 "Sai, vì găng tay chống cắt phải luôn được sử dụng khi vận hành máy cắt để bảo vệ an toàn cho người vận hành, không phụ thuộc vào việc có ai kiểm tra hay không."
 "Phát biểu sau đây đúng hay sai: "Khi vận hành máy cắt tự động, việc cắt vải đã có máy làm, còn người lao động chỉ cần đứng bấm điện thoại, trò chuyện cùng nhau đến khi máy cắt xong là được.""
 "Sai, vì người vận hành phải luôn tập trung theo dõi quá trình cắt để phát hiện và xử lý kịp thời các sự cố, việc trò chuyện hoặc dùng điện thoại có thể gây mất an toàn cho người lao động."
-"Là tổ trưởng bộ phận cắt nhưng không nằm trong danh sách được phân công vận hành máy cắt cầm tay, tổ trưởng có được phép vận hành máy cắt cầm tay hay không?"
+"Là tổ trưởng bộ phận cắt nhưng không nằm trong danh sách được phân công vận hành máy cắt cầm tay, tổ trưởng có được phép vận hành máy cắt cầm tay hay không?" 
 "Hành vi nào sau đây là không an toàn trong kho vải?"
 "Để hàng hóa chắn lối đi."
 "Trong trường hợp xảy ra cháy nổ trong kho, việc đầu tiên cần làm là gì?"
@@ -268,57 +270,60 @@ Chủ đề: Lý thuyết chung về an toàn vệ sinh lao động tại nơi l
 "Để bảo vệ tính mạng và sức khỏe của người lao động."
 "Trong quá trình cắt, biện pháp đúng để phòng tránh tai nạn do dao hoặc kéo sắc gây ra là gì?"
 "Đậy nắp lưỡi dao khi không sử dụng."
-"Nếu máy cắt vải không có nhãn tiếng Việt, nguy cơ nào dễ xảy ra nhất?": "Công nhân thao tác sai do không hiểu rõ hướng dẫn hoặc cảnh báo..."
-};
-function similarity(str1, str2) {
-str1 = str1.toLowerCase().trim();
-str2 = str2.toLowerCase().trim();
-if (str1 === str2) return 1;
-let matches = 0;
-const words1 = str1.split(" ");
-const words2 = str2.split(" ");
-words1.forEach(w => {
-if (words2.includes(w)) matches++;
-});
-return matches / Math.max(words1.length, words2.length);
-}
-function findBestMatch(question) {
-let bestScore = 0;
-let bestMatch = null;
-for (const q of Object.keys(answerDB)) {
-const score = similarity(question, q);
-if (score > bestScore) {
-bestScore = score;
-bestMatch = q;
-}
-}
-return bestScore >= 0.6 ? bestMatch : null;
-}
-function highlightAnswer() {
-const questionElem = document.querySelector('[data-functional-selector="question-text"]');
-if (!questionElem) return;
-const questionText = questionElem.textContent.trim();
-const matched = findBestMatch(questionText);
-if (!matched) return;
-const correctAnswer = answerDB[matched];
-const buttons = document.querySelectorAll('[data-functional-selector="answer-button"]');
-buttons.forEach(btn => {
-const text = btn.textContent.trim();
-if (text === correctAnswer) {
-btn.style.backgroundColor = 'limegreen';
-btn.style.color = 'white';
-btn.style.border = '3px solid darkgreen';
-} else {
-btn.style.opacity = '0.5';
-}
-});
-}
-window.addEventListener('load', () => {
-setInterval(highlightAnswer, 1000);
-});
+        "Nếu máy cắt vải không có nhãn tiếng Việt, nguy cơ nào dễ xảy ra nhất?": "Công nhân thao tác sai do không hiểu rõ hướng dẫn hoặc cảnh báo..."
+    };
+
+    };
+
+    // Hàm so khớp câu hỏi gần đúng
+    function similarity(str1, str2) {
+        str1 = str1.toLowerCase().trim();
+        str2 = str2.toLowerCase().trim();
+        if (str1 === str2) return 1;
+        let matches = 0;
+        const words1 = str1.split(" ");
+        const words2 = str2.split(" ");
+        words1.forEach(w => {
+            if (words2.includes(w)) matches++;
+        });
+        return matches / Math.max(words1.length, words2.length);
+    }
+
+    function findBestMatch(question) {
+        let bestScore = 0;
+        let bestMatch = null;
+        for (const q of Object.keys(answerDB)) {
+            const score = similarity(question, q);
+            if (score > bestScore) {
+                bestScore = score;
+                bestMatch = q;
+            }
+        }
+        return bestScore >= 0.6 ? bestMatch : null;
+    }
+
+    function highlightAnswer() {
+        const questionElem = document.querySelector('[data-functional-selector="question-text"]');
+        if (!questionElem) return;
+        const questionText = questionElem.textContent.trim();
+        const matched = findBestMatch(questionText);
+        if (!matched) return;
+        const correctAnswer = answerDB[matched];
+        const buttons = document.querySelectorAll('[data-functional-selector="answer-button"]');
+        buttons.forEach(btn => {
+            const text = btn.textContent.trim();
+            if (text === correctAnswer) {
+                btn.style.backgroundColor = 'limegreen';
+                btn.style.color = 'white';
+                btn.style.border = '3px solid darkgreen';
+            } else {
+                btn.style.opacity = '0.5';
+            }
+        });
+    }
+
+    // Tự động tô màu mỗi 1 giây
+    window.addEventListener('load', () => {
+        setInterval(highlightAnswer, 1000);
+    });
 })();
-"""
-# Ghi vào file
-with open(script_path, "w", encoding="utf-8") as f:
-f.write(user_script)
-script_path
